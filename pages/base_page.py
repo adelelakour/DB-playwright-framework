@@ -15,4 +15,3 @@ class BasePage:
             print("⚠️ Cookie banner did not appear or was already accepted. Proceeding...")
 
 
-
