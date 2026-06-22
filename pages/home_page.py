@@ -28,10 +28,10 @@ class HomePage(BasePage):
         if first_class:
             self.page.get_by_role("option", name="1. Klasse").click()
 
+
         if not today:
             tomorrow_date = datetime.now() + timedelta(days=1)
             tomorrow = str(tomorrow_date.day)
-
 
             self.page.get_by_text("Heute, ab").click()
             active_month = self.page.locator(".db-web-date-picker-calendar .swiper-slide-active")
@@ -41,12 +41,17 @@ class HomePage(BasePage):
             expect(self.page.locator(".quick-finder-options__hinfahrt .quick-finder-option-area__heading")).to_contain_text("Morgen")
 
 
-        # if not one_way:
-        #     tomorrow_date = datetime.now() + timedelta(days=1)
-        #     tomorrow = str(tomorrow_date.day)
-        #     self.page.get_by_text("Rückfahrt").click()
-        #     self.page.get_by_text(f"{tomorrow}").click()
-        #     self.page.locator("[data-test-id=\"undefined-save-button\"]").click()
+        if not one_way:
+            tomorrow_date = datetime.now() + timedelta(days=1)
+            tomorrow = str(tomorrow_date.day)
+
+            self.page.get_by_text("Heute, ab").click()
+            self.page.locator(".quick-finder-zeitauswahl-content__time-picker-bar").get_by_role("button", name="jetzt").click()
+
+            self.page.get_by_text("Rückfahrt").click()
+            active_month = self.page.locator(".db-web-date-picker-calendar .swiper-slide-active")
+            active_month.get_by_text(tomorrow, exact=True).click()
+            self.page.locator("[data-test-id=\"undefined-save-button\"]").click()
 
         self.page.get_by_role("button", name="Suchen").click()
 

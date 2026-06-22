@@ -21,3 +21,9 @@ class TestSeachHappyPath:
         home.open_url("https://www.bahn.de/")
         home.handle_cookie_banner()
         home.search_train("Berlin", "Hamburg", today=False)
+
+    def test_round_trip_search(self, page):
+        home = HomePage(page)
+        home.open_url("https://www.bahn.de/")
+        home.handle_cookie_banner()
+        home.search_train("Berlin", "Hamburg", one_way=False)
